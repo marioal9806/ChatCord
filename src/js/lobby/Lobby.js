@@ -3,6 +3,7 @@ import axios from 'axios'
 
 import SelectRoomForm from './components/SelectRoomForm'
 import InputUsername from './components/InputUsername'
+import RoomTabList from './components/RoomTabList'
 
 function Lobby() {
   const [rooms, setRooms] = useState([])
@@ -48,6 +49,7 @@ function Lobby() {
   return (
     <Fragment>
       <InputUsername username={username} handleChange={setUsername} />
+      <RoomTabList rooms={rooms}/>
       <SelectRoomForm selectedRoom={selectedRoom} handleChange={handleChange} rooms={rooms}/>
       <button type='button' className='btn secondary' onClick={handleSubmit}>
         Join!
