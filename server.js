@@ -102,8 +102,12 @@ io.on('connection', socket => {
   })
 
   socket.on('disconnect', () => {
-    console.log(`DISCONNECT: Socket "${socket.id}" has disconnected`)
-    io.in(socket.room.id).emit('message', { message: `${socket.username} has left the chat!`, username: 'ChatCord', self: false})
+    if(socket.room !== undefined) {
+      console.log(`DISCONNECT: Socket "${socket.id}" has disconnected`)
+      io.in(socket.room.id).emit('message', { message: `${socket.username} has left the chat!`, username: 'ChatCord', self: false})
+    } else { 
+      console.log(`DISCONNECT: An anonymous Socket has disconnected`)
+    } 
   })
 })
 
