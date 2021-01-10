@@ -21,7 +21,6 @@ body {
   background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
   background-repeat: no-repeat;
   background-attachment: fixed;
-  
 }
 
 h1 {
@@ -97,7 +96,50 @@ li a:hover {
   background-color: rgba(255, 255, 255, 0.3);
 }
 
+/* ======================================== */
+/* Footer Styling */
+/* ======================================== */
+
+footer {
+  color: #fff;
+  background-color: #333;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+footer p {
+  line-height: 2;
+}
+
+footer a {
+  color: var(--secondary-color);
+  text-decoration: none;
+  border-radius: 5px;
+  transition: color 300ms;
+}
+
+footer a:hover {
+  color: var(--primary-color);
+}
+
+footer a i {
+  margin: 0 1rem;
+  color: #fff;
+  font-size: 2.5rem;
+  transition: transform 200ms;
+  position: relative;
+  top: 5px;
+}
+
+footer a i:hover {
+  transform: scale(1.2) rotateZ(-360deg);
+}
+
+/* ======================================== */
 /* Main Section Styling */
+/* ======================================== */
 main {
   margin: 2rem auto;
   padding: 1rem;
@@ -203,7 +245,7 @@ select, input {
   font-size: 100%;
   margin: 0 auto;
   padding: 0.5em;
-  display: block;
+  display: inline-block;
 }
 
 /* ======================================== */
