@@ -7,24 +7,29 @@ const server = http.createServer(app)
 const io = require('socket.io')(server)
 const morgan = require('morgan')
 const session = require('express-session')
+const helmet = require('helmet')
 
 const generate = require('project-name-generator')
 
 const PORT = process.env.PORT || 3000
-
+const NODE_ENV = process.env.NODE_ENV || 'development'
 
 // Express Middleware
-app.use(express.static(path.join(__dirname, 'dist')))
+app.use(helmet())
+app.use(express.static(path.join(__dirname, NODE_ENV === 'production' ? 'build' : 'dist')))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(morgan('dev'))
+app.use(NODE_ENV === 'production' ? morgan('common') : morgan('dev'))
 
 app.use(session({
   secret: 'LN2ByYpc?G7l37&',
+  name: 'sessionVv33QBzn',
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 1000 * 60 * 60 * 24
+    maxAge: 1000 * 60 * 60 * 24,
+    httpOnly: true,
+    secure: NODE_ENV === 'production' ? true : false 
   }
 }))
 
