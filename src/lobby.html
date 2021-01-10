@@ -10,30 +10,34 @@
   <title>Lobby</title>
 </head>
 <body>
-  <header>
-    <h1>
-      <a href="/"><i class="fas fa-comments"></i>ChatCord</a>
-    </h1>
-    <nav>
-      <ul>
-        <li><a href="/">Home <i class="fas fa-home"></i></a></li>
-        <li><a href="/lobby">Rooms <i class="far fa-window-restore"></i></a></li>
-        <li><a href="#">My Account <i class="fas fa-user-cog"></i></a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main class="lobby">
-    <h2>Join a Room</h2>
-    <form id="room-form"></form>
-  </main>
-
-  <footer>
-    <p>
-      Project created by <a href="mailto:marioal9806@hotmail.com">Mario Ortega</a>.
-      <a href="https://github.com/marioal9806/ChatCord" target="_blank"><i class="fab fa-github-square"></i></a>
-    </p>     
-  </footer>
+  <div id="page-container">
+    <header>
+      <h1>
+        <a href="/"><i class="fas fa-comments"></i>ChatCord</a>
+      </h1>
+      <nav>
+        <ul>
+          <li><a href="/">Home <i class="fas fa-home"></i></a></li>
+          <li><a href="/lobby">Rooms <i class="far fa-window-restore"></i></a></li>
+          <li><a href="#">My Account <i class="fas fa-user-cog"></i></a></li>
+        </ul>
+      </nav>
+    </header>
+    
+    <div id="content-wrap">
+      <main class="lobby">
+        <h2>Join a Room</h2>
+        <form id="room-form"></form>
+      </main>
+    </div>
+  
+    <footer>
+      <p>
+        Project created by <a href="mailto:marioal9806@hotmail.com">Mario Ortega</a>.
+        <a href="https://github.com/marioal9806/ChatCord" target="_blank"><i class="fab fa-github-square"></i></a>
+      </p>     
+    </footer>
+  </div>
 
   <script src="/js/lobby/index.js"></script>
 </body>

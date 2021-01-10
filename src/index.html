@@ -10,41 +10,46 @@
     <title>Welcome to ChatCord!</title>
   </head>
   <body>
-    <header>
-      <h1>
-        <a href="/"><i class="fas fa-comments"></i>ChatCord</a>
-      </h1>
-      <nav>
-        <ul>
-          <li><a href="/">Home <i class="fas fa-home"></i></a></li>
-          <li><a href="/lobby">Rooms <i class="far fa-window-restore"></i></a></li>
-          <li><a href="#">My Account <i class="fas fa-user-cog"></i></a></li>
-        </ul>
-      </nav>
-    </header>
-
-    <main class="landing-page">
-      <h2>Welcome To ChatCord!</h2>
-
-      <p>ChatCord is a free app that lets you share your ideas on different topics.</p>
-      <p>You can join different Chat Rooms and interact with the connected users.</p>
-      <p>
-        It's easy to start! <br> By just using a nickname you can start chatting. <br> If you prefer, you can also create an account to store your messages and preferences.
-      </p>
+    <div id="page-container">
+      <header>
+        <h1>
+          <a href="/"><i class="fas fa-comments"></i>ChatCord</a>
+        </h1>
+        <nav>
+          <ul>
+            <li><a href="/">Home <i class="fas fa-home"></i></a></li>
+            <li><a href="/lobby">Rooms <i class="far fa-window-restore"></i></a></li>
+            <li><a href="#">My Account <i class="fas fa-user-cog"></i></a></li>
+          </ul>
+        </nav>
+      </header>
+  
       
-      <p>
-        <button class="btn primary" id="goto-lobby">Join a Room!</button>
-        <button class="btn secondary">Create your account</button>
-      </p>
-      <img src="images/post-message.svg" alt="Phone Chat Illustration">
-    </main>
+      <div id="content-wrap">
+        <main class="landing-page">
+          <h2>Welcome To ChatCord!</h2>
+    
+          <p>ChatCord is a free app that lets you share your ideas on different topics.</p>
+          <p>You can join different Chat Rooms and interact with the connected users.</p>
+          <p>
+            It's easy to start! <br> By just using a nickname you can start chatting. <br> If you prefer, you can also create an account to store your messages and preferences.
+          </p>
+          
+          <p>
+            <button class="btn primary" id="goto-lobby">Join a Room!</button>
+            <button class="btn secondary">Create your account</button>
+          </p>
+          <img src="images/post-message.svg" alt="Phone Chat Illustration">
+        </main>
+      </div>
 
-    <footer>
-      <p>
-        Project created by <a href="mailto:marioal9806@hotmail.com">Mario Ortega</a>.
-        <a href="https://github.com/marioal9806/ChatCord" target="_blank"><i class="fab fa-github-square"></i></a>
-      </p>     
-    </footer>
+      <footer>
+        <p>
+          Project created by <a href="mailto:marioal9806@hotmail.com">Mario Ortega</a>.
+          <a href="https://github.com/marioal9806/ChatCord" target="_blank"><i class="fab fa-github-square"></i></a>
+        </p>     
+      </footer>
+    </div>
 
     <script>
       const lobbyBtn = document.getElementById('goto-lobby')
