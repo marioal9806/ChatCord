@@ -243,9 +243,10 @@ main {
 select, input {
   font-family: inherit;
   font-size: 100%;
-  margin: 0 auto;
-  padding: 0.5em;
+  margin: 1rem;
+  padding: 1rem;
   display: inline-block;
+  border-radius: 5px;
 }
 
 /* ======================================== */

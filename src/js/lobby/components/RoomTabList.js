@@ -7,6 +7,7 @@ import ButtonList from './ButtonList'
 const Container = styled.section`
   margin: 1rem 1rem;
 
+  background-color: #fff;
   border: 1px solid lightgray;
   border-radius: 10px;
 
@@ -24,7 +25,7 @@ const RoomInfo = styled.article`
 
 const OuterContainer = styled.div`
   position: absolute;
-  top: 0;
+  top: 10%;
   left: 0;
   bottom: 0;
   right: 0;

@@ -12,7 +12,6 @@ function InputUsername(props) {
         onChange={(e) => props.handleChange(e.target.value)}
         placeholder="Username..."
         required
-        style={{ margin: "2rem", padding: "1rem"}}
       />
       <button type="button" className="btn secondary" onClick={props.handleRandom}>Generate Random</button>
     </Fragment>
