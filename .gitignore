@@ -6,3 +6,6 @@ dist/
 
 # Parcel Caching
 .cache/
+
+# Credentials and Environment Variables
+.env
