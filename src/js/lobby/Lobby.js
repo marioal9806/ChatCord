@@ -46,9 +46,16 @@ function Lobby() {
     setSelectedRoom(newRoom)
   }
 
+  function handleRandom() {
+    axios.get('/api/generate')
+      .then(response => {
+        setUsername(response.data.username)
+      })
+  }
+
   return (
     <Fragment>
-      <InputUsername username={username} handleChange={setUsername} />
+      <InputUsername username={username} handleChange={setUsername} handleRandom={handleRandom}/>
       <RoomTabList rooms={rooms}/>
       <SelectRoomForm selectedRoom={selectedRoom} handleChange={handleChange} rooms={rooms}/>
       <button type='button' className='btn secondary' onClick={handleSubmit}>

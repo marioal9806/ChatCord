@@ -8,6 +8,8 @@ const io = require('socket.io')(server)
 const morgan = require('morgan')
 const session = require('express-session')
 
+const generate = require('project-name-generator')
+
 const PORT = process.env.PORT || 3000
 
 
@@ -48,6 +50,12 @@ app.get('/room/:roomName', (req, res) => {
 
 app.get('/api/rooms', (req, res) => {
   res.json({ rooms: ROOMS })
+})
+
+app.get('/api/generate', (req, res) => {
+  res.json({
+    username: generate({ alliterative: true }).dashed
+  })
 })
 
 app.get('/api/username', (req, res) => {
