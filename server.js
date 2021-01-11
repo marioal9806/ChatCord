@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const path = require('path')
 const http = require('http')
 
@@ -7,18 +9,20 @@ const server = http.createServer(app)
 const io = require('socket.io')(server)
 const morgan = require('morgan')
 const session = require('express-session')
+const MongoStore = require('connect-mongo')(session)
 const helmet = require('helmet')
 
 const generate = require('project-name-generator')
 
 const PORT = process.env.PORT || 3000
 const NODE_ENV = process.env.NODE_ENV || 'development'
+const PUBLIC_PATH = process.env.NODE_ENV === 'production' ? 'build' : 'dist'
 
 // Express Middleware
 app.use(helmet({
   contentSecurityPolicy: false
 }))
-app.use(express.static(path.join(__dirname, NODE_ENV === 'production' ? 'build' : 'dist')))
+app.use(express.static(path.join(__dirname, PUBLIC_PATH)))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(NODE_ENV === 'production' ? morgan('common') : morgan('dev'))
@@ -28,11 +32,17 @@ app.use(session({
   name: 'sessionVv33QBzn',
   resave: false,
   saveUninitialized: false,
+  rolling: false,
   cookie: {
     maxAge: 1000 * 60 * 60 * 24,
     httpOnly: true,
-    secure: NODE_ENV === 'production' ? true : false 
-  }
+    secure: false
+  },
+  store: new MongoStore({
+    url: process.env.MONGO_STORE,
+    dbName: 'chatcord',
+    collection: 'sessions'
+  })
 }))
 
 const ROOMS = [
@@ -44,15 +54,15 @@ const ROOMS = [
 
 // API Endpoints
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'))
+  res.sendFile(path.join(__dirname, PUBLIC_PATH, 'index.html'))
 })
 
 app.get('/lobby', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'lobby.html'))
+  res.sendFile(path.join(__dirname, PUBLIC_PATH, 'lobby.html'))
 })
 
 app.get('/room/:roomName', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'room.html'))
+  res.sendFile(path.join(__dirname, PUBLIC_PATH, 'room.html'))
 })
 
 app.get('/api/rooms', (req, res) => {
@@ -77,7 +87,6 @@ app.get('/api/username', (req, res) => {
 app.post('/join-room', (req, res) => {
   const { username, room: selectedRoom } = req.body
   req.session.username = username
-
   const roomExists = ROOMS.filter(room => {
     return room.id === selectedRoom.id
   })
