@@ -15,7 +15,9 @@ const PORT = process.env.PORT || 3000
 const NODE_ENV = process.env.NODE_ENV || 'development'
 
 // Express Middleware
-app.use(helmet())
+app.use(helmet({
+  contentSecurityPolicy: false
+}))
 app.use(express.static(path.join(__dirname, NODE_ENV === 'production' ? 'build' : 'dist')))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
