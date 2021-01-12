@@ -10,6 +10,7 @@ const io = require('socket.io')(server)
 const morgan = require('morgan')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
+const mongoose = require('mongoose');
 const helmet = require('helmet')
 
 const generate = require('project-name-generator')
@@ -17,6 +18,12 @@ const generate = require('project-name-generator')
 const PORT = process.env.PORT || 3000
 const NODE_ENV = process.env.NODE_ENV || 'development'
 const PUBLIC_PATH = process.env.NODE_ENV === 'production' ? 'build' : 'dist'
+
+const Room = require('./models/Room')
+
+mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true})
+  .then(() => console.log('Connection to database successful'))
+  .catch(err => console.log(err));
 
 // Express Middleware
 app.use(helmet({
@@ -39,18 +46,11 @@ app.use(session({
     secure: false
   },
   store: new MongoStore({
-    url: process.env.MONGO_STORE,
+    url: process.env.MONGO_URI,
     dbName: 'chatcord',
     collection: 'sessions'
   })
 }))
-
-const ROOMS = [
-  { id: 'algo', name: 'Algorithms and Data Structures', description: 'Share your tips to prepare for technical interviews' },
-  { id: 'web-dev', name: 'Web Development', description: 'Share your ideas and showcase your projects' },
-  { id: 'mobile-dev', name: 'Mobile Development', description: 'Explore the trends in mobile development' },
-  { id: 'ml', name: 'Machine Learning', description: 'Learn new techniques and models of AI and Machine Learning' },
-]
 
 // API Endpoints
 app.get('/', (req, res) => {
@@ -65,8 +65,12 @@ app.get('/room/:roomName', (req, res) => {
   res.sendFile(path.join(__dirname, PUBLIC_PATH, 'room.html'))
 })
 
-app.get('/api/rooms', (req, res) => {
-  res.json({ rooms: ROOMS })
+app.get('/api/rooms', async (req, res) => {
+  Room.find({})
+    .then(rooms => {
+      res.json({ rooms })
+    })
+    .catch(error => console.error(error))
 })
 
 app.get('/api/generate', (req, res) => {
@@ -87,15 +91,20 @@ app.get('/api/username', (req, res) => {
 app.post('/join-room', (req, res) => {
   const { username, room: selectedRoom } = req.body
   req.session.username = username
-  const roomExists = ROOMS.filter(room => {
-    return room.id === selectedRoom.id
-  })
-  if(roomExists.length === 0) {
-    res.status(404).json({ error: 'Room Not Found' })
-  }
-  else {
-    res.status(200).json({ room: selectedRoom })
-  }
+
+  Room.find({})
+    .then(rooms => {
+      const roomExists = rooms.filter(room => {
+        return room.id === selectedRoom.id
+      })
+      if(roomExists.length === 0) {
+        res.status(404).json({ error: 'Room Not Found' })
+      }
+      else {
+        res.status(200).json({ room: selectedRoom })
+      }
+    })
+    .catch(error => console.error(error))
 })
 
 
