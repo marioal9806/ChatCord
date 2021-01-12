@@ -260,6 +260,23 @@ select, input {
   border-radius: 5px;
 }
 
+.spinner-div {
+  font-size: 4rem;
+}
+
+.spinner {
+  animation: spinner 2s linear;
+}
+
+@keyframes spinner {
+  from {
+    transform: rotateZ(0deg);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+
 /* ======================================== */
 /* Chat Room Styling */
 /* ======================================== */
