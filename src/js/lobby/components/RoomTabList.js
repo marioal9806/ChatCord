@@ -40,7 +40,7 @@ const InnerContainer = styled.div`
 `
 
 function RoomTabList(props) {
-  if(props.rooms.length === 0) {
+  if(props.isLoading || props.isError) {
     return null
   }
 
@@ -48,6 +48,7 @@ function RoomTabList(props) {
   
   const handleClick = (index) => {
     setIndex(index)
+    props.dispatch({ type: 'SET_SELECTED_ROOM', payload: props.rooms[index] })
   }
 
   const transitions = useTransition(props.rooms[index], key => key.id, {
@@ -55,7 +56,6 @@ function RoomTabList(props) {
     enter: {opacity: 1},
     leave: {opacity: 0},
   })
-
 
   return (
     <Fragment>

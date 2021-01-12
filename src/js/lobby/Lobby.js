@@ -1,68 +1,141 @@
-import React, { Fragment, useState, useEffect }  from 'react'
-import axios from 'axios'
+import React, { Fragment, useState, useEffect, useReducer } from "react";
+import axios from "axios";
 
-import SelectRoomForm from './components/SelectRoomForm'
-import InputUsername from './components/InputUsername'
-import RoomTabList from './components/RoomTabList'
+import SelectRoomForm from "./components/SelectRoomForm";
+import InputUsername from "./components/InputUsername";
+import RoomTabList from "./components/RoomTabList";
+import Spinner from "./components/Spinner";
+
+function lobbyReducer(state, action) {
+  switch (action.type) {
+    case "FETCH_ROOMS":
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+      };
+    case "FETCH_ROOMS_COMPLETED":
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        rooms: action.payload,
+      };
+    case "FETCH_ERROR":
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        error: action.payload,
+      };
+    case "SET_USERNAME":
+      return {
+        ...state,
+        username: action.payload,
+      };
+    case "SET_SELECTED_ROOM":
+      return {
+        ...state,
+        selectedRoom: action.payload,
+      };
+    default:
+      throw new Error();
+  }
+}
 
 function Lobby() {
-  const [rooms, setRooms] = useState([])
-  const [selectedRoom, setSelectedRoom] = useState({ id: '', name: '' })
-  const [username, setUsername] = useState('')
+  const [state, dispatch] = useReducer(lobbyReducer, {
+    rooms: [],
+    selectedRoom: {},
+    username: "",
+    isLoading: true,
+    isError: false,
+    error: {},
+  });
 
   // Get the list of available rooms
   useEffect(() => {
-    axios.get('/api/rooms')
-      .then(response => {
-        setRooms(response.data.rooms)
-        setSelectedRoom(response.data.rooms[0])
-      })
-      .catch(error => {
-        console.log(error)
-      })
-  }, [])
+    let didCancel = false;
+    const fetchRoomData = async () => {
+      dispatch({ type: "FETCH_ROOMS" });
+      try {
+        const response = await axios.get("/api/rooms");
+        if(!didCancel) {
+          dispatch({
+            type: "FETCH_ROOMS_COMPLETED",
+            payload: response.data.rooms,
+          });
+          dispatch({ type: "SET_SELECTED_ROOM", payload: response.data.rooms[0] });
+        }
+      } catch (error) {
+        if(!didCancel) {
+          dispatch({ type: "FETCH_ERROR", payload: error });
+        }
+      }
+    };
+    fetchRoomData();
+    return () => {
+      didCancel = true;
+    };
+  }, []);
 
-  function handleSubmit(e) {
-    axios.post('/join-room', {
-      room: selectedRoom,
-      username: username
-    })
+  function handleSubmit() {
+    axios
+      .post("/join-room", {
+        room: state.selectedRoom,
+        username: state.username,
+      })
       // If the request is successful, it means the room exists
-      .then(response => {
+      .then((response) => {
         // Redirect the user to the proper room
-        console.log(response.data.room)
-        const { id, name } = response.data.room
-        window.location.href = `/room/${id}`
+        console.log(response.data.room);
+        const { id, name } = response.data.room;
+        window.location.href = `/room/${id}`;
       })
-      .catch(error => {
+      .catch((error) => {
         // If it fails, display the corresponding error
-        console.log(error.response.data)
-      })
-
+        console.log(error.response.data);
+      });
   }
 
-  function handleChange(e) {
-    const newRoom = rooms[e.target.selectedIndex]
-    setSelectedRoom(newRoom)
-  }
-
-  function handleRandom() {
-    axios.get('/api/generate')
-      .then(response => {
-        setUsername(response.data.username)
-      })
+  function handleRandomUsername() {
+    axios.get("/api/generate").then((response) => {
+      dispatch({ type: "SET_USERNAME", payload: response.data.username });
+    });
   }
 
   return (
     <Fragment>
-      <InputUsername username={username} handleChange={setUsername} handleRandom={handleRandom}/>
-      <RoomTabList rooms={rooms}/>
-      <SelectRoomForm selectedRoom={selectedRoom} handleChange={handleChange} rooms={rooms}/>
-      <button type='button' className='btn secondary' onClick={handleSubmit}>
-        Join!
-      </button>
+      {state.isLoading && <Spinner />}
+      {state.isError && <p>Error...</p>}
+      <InputUsername
+        isLoading={state.isLoading}
+        isError={state.isError}
+        username={state.username}
+        dispatch={dispatch}
+        handleRandomUsername={handleRandomUsername}
+      />
+      <RoomTabList 
+        isLoading={state.isLoading}
+        isError={state.isError}
+        rooms={state.rooms} 
+        dispatch={dispatch}
+      />
+      <SelectRoomForm
+        isLoading={state.isLoading}
+        isError={state.isError}
+        selectedRoom={state.selectedRoom}
+        rooms={state.rooms}
+        dispatch={dispatch}
+      />
+      { (state.isLoading || state.isError) ?
+        false : 
+        <button type="button" className="btn secondary" onClick={handleSubmit}>
+          Join!
+        </button>
+      }
     </Fragment>
-  )
+  );
 }
 
-export default Lobby
+export default Lobby;
