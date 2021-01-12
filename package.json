@@ -13,6 +13,8 @@
   "author": "Mario Ortega",
   "license": "ISC",
   "dependencies": {
+    "@dicebear/avatars": "^4.5.2",
+    "@dicebear/avatars-avataaars-sprites": "^4.5.2",
     "axios": "^0.21.1",
     "connect-mongo": "^3.2.0",
     "dotenv": "^8.2.0",

@@ -88,10 +88,19 @@ app.get('/api/username', (req, res) => {
   }
 })
 
-app.post('/join-room', (req, res) => {
-  const { username, room: selectedRoom } = req.body
-  req.session.username = username
+app.get('/api/avatar', (req, res) => {
+  if(req.session.avatar) {
+    res.json({ avatar: req.session.avatar })
+  }
+  else {
+    res.status(404).json({ error: 'Avatar Not Found' })
+  }
+})
 
+app.post('/join-room', (req, res) => {
+  const { username, room: selectedRoom, avatar } = req.body
+  req.session.username = username
+  req.session.avatar = avatar
   Room.find({})
     .then(rooms => {
       const roomExists = rooms.filter(room => {

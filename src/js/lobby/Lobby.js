@@ -1,10 +1,11 @@
-import React, { Fragment, useState, useEffect, useReducer } from "react";
+import React, { Fragment, useEffect, useReducer } from "react";
 import axios from "axios";
 
 import SelectRoomForm from "./components/SelectRoomForm";
 import InputUsername from "./components/InputUsername";
 import RoomTabList from "./components/RoomTabList";
 import Spinner from "./components/Spinner";
+import Avatar from "./components/Avatar";
 
 function lobbyReducer(state, action) {
   switch (action.type) {
@@ -38,6 +39,11 @@ function lobbyReducer(state, action) {
         ...state,
         selectedRoom: action.payload,
       };
+    case "SET_AVATAR":
+      return {
+        ...state,
+        avatar: action.payload
+      };
     default:
       throw new Error();
   }
@@ -48,6 +54,7 @@ function Lobby() {
     rooms: [],
     selectedRoom: {},
     username: "",
+    avatar: null,
     isLoading: true,
     isError: false,
     error: {},
@@ -80,10 +87,14 @@ function Lobby() {
   }, []);
 
   function handleSubmit() {
+    const serializedSVG = new XMLSerializer().serializeToString(state.avatar)
+    const base64Data = window.btoa(serializedSVG)
+    const serializedAvatar = "data:image/svg+xml;base64," + base64Data
     axios
       .post("/join-room", {
         room: state.selectedRoom,
         username: state.username,
+        avatar: serializedAvatar
       })
       // If the request is successful, it means the room exists
       .then((response) => {
@@ -114,6 +125,11 @@ function Lobby() {
         username={state.username}
         dispatch={dispatch}
         handleRandomUsername={handleRandomUsername}
+      />
+      <Avatar 
+        isLoading={state.isLoading}
+        isError={state.isError}
+        dispatch={dispatch}
       />
       <RoomTabList 
         isLoading={state.isLoading}
