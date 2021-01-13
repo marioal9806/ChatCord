@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "watch": "parcel watch src/*.html",
+    "build": "parcel build src/*.html -d build/"
   },
   "engines": {
     "node": "14.15.x"
