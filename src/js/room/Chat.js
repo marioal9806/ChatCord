@@ -1,5 +1,4 @@
-import React, { Fragment } from "react";
-import { useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useMemo } from "react";
 
 import UserList from "./components/UserList";
 import MessageBox from "./components/MessageBox";
@@ -8,8 +7,6 @@ import MessageForm from "./components/MessageForm";
 import axios from "axios";
 import io from "socket.io-client";
 
-const socket = io();
-
 function Chat() {
   const [title, setTitle] = useState("");
   const [onlineUsers, setOnlineUsers] = useState([]);
@@ -17,6 +14,11 @@ function Chat() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [currentRoom, setCurrentRoom] = useState({});
+  const [avatar, setAvatar] = useState('')
+
+  const socket = useMemo(() => {
+    return io()
+  }, [])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,14 +55,28 @@ function Chat() {
   }, [])
 
   useEffect(() => {
+    const fetchAvatar = async () => {
+      try {
+        const response = await axios.get('/api/avatar')
+        setAvatar(response.data.avatar)
+      }
+      catch(error) {
+        console.log(error)
+      }
+    }
+    fetchAvatar()
+  }, [])
+
+  useEffect(() => {
     socket.on("message", (message) => {
+      console.log(message.avatar)
       setMessages((prevMessages) => [...prevMessages, message]);
     });
   }, []);
 
   function handleNewMessage() {
-    socket.emit("message", { message: newMessage, username: username}, currentRoom);
-    setMessages([...messages, { message: newMessage, username: username, self: true }]);
+    socket.emit("message", { message: newMessage, username: username, avatar: avatar}, currentRoom);
+    setMessages(prevMessages => [...prevMessages, { message: newMessage, username: username, self: true, avatar: avatar }]);
     setNewMessage("");
   }
 

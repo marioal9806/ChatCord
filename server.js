@@ -10,7 +10,7 @@ const io = require('socket.io')(server)
 const morgan = require('morgan')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 const helmet = require('helmet')
 
 const generate = require('project-name-generator')
@@ -20,10 +20,17 @@ const NODE_ENV = process.env.NODE_ENV || 'development'
 const PUBLIC_PATH = process.env.NODE_ENV === 'production' ? 'build' : 'dist'
 
 const Room = require('./models/Room')
+const Bot = require('./models/Bot')
 
 mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true})
-  .then(() => console.log('Connection to database successful'))
-  .catch(err => console.log(err));
+.then(() => console.log('Connection to database successful'))
+.catch(err => console.log(err));
+
+let CHATBOT_AVATAR
+Bot.findOne({ name: 'welcome-bot' })
+  .then(bot => {
+    CHATBOT_AVATAR = bot
+  })
 
 // Express Middleware
 app.use(helmet({
@@ -127,18 +134,18 @@ io.on('connection', socket => {
     socket.room = room
     socket.join(id)
     console.log(`JOIN ROOM: Socket "${socket.id}" has joined room "${id}"`)
-    io.in(id).emit('message', { message: `${username} has joined the chat!`, username: 'ChatCord', self: false})
+    io.in(id).emit('message', { message: `${username} has joined the chat!`, username: 'ChatCord', self: false, avatar: CHATBOT_AVATAR.base64})
   })
 
   socket.on('message', (msg, room) => {
     console.log(`MESSAGE: Message "${msg.message}" sent to room "${room.id}" by "${msg.username}"`)
-    socket.to(room.id).emit('message', { message: msg.message, username: msg.username, self: false })
+    socket.to(room.id).emit('message', { message: msg.message, username: msg.username, self: false, avatar: msg.avatar })
   })
 
   socket.on('disconnect', () => {
     if(socket.room !== undefined) {
       console.log(`DISCONNECT: Socket "${socket.id}" has disconnected`)
-      io.in(socket.room.id).emit('message', { message: `${socket.username} has left the chat!`, username: 'ChatCord', self: false})
+      io.in(socket.room.id).emit('message', { message: `${socket.username} has left the chat!`, username: 'ChatCord', self: false, avatar: CHATBOT_AVATAR.base64})
     } else { 
       console.log(`DISCONNECT: An anonymous Socket has disconnected`)
     } 

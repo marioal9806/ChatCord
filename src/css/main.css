@@ -383,6 +383,13 @@ select, input {
   margin-right: 0.5rem;
 }
 
+.message-container img {
+  flex: 0 1 auto;
+  width: 3rem;
+  height: 3rem;
+  margin-right: 0.5rem;
+}
+
 .message-container span {
   flex: 1;
 }
