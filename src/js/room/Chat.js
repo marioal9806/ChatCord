@@ -69,7 +69,6 @@ function Chat() {
 
   useEffect(() => {
     socket.on("message", (message) => {
-      console.log(message.avatar)
       setMessages((prevMessages) => [...prevMessages, message]);
     });
   }, []);

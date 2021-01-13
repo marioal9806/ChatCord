@@ -99,7 +99,6 @@ function Lobby() {
       // If the request is successful, it means the room exists
       .then((response) => {
         // Redirect the user to the proper room
-        console.log(response.data.room);
         const { id, name } = response.data.room;
         window.location.href = `/room/${id}`;
       })
