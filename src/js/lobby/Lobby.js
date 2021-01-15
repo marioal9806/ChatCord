@@ -145,7 +145,7 @@ function Lobby() {
       />
       { (state.isLoading || state.isError) ?
         false : 
-        <button type="button" className="btn secondary" onClick={handleSubmit}>
+        <button type="button" className="btn primary" onClick={handleSubmit}>
           Join!
         </button>
       }

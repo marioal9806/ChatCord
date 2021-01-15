@@ -56,7 +56,7 @@ function Avatar(props) {
       <p>You can also generate your own avatar!</p>
       <Container>
         { avatar && <AvatarContainer ref={svgNode} dangerouslySetInnerHTML={{__html: avatar}}></AvatarContainer> }
-        <button type="button" className="btn secondary" onClick={handleClick}>Generate Avatar</button>
+        <button type="button" className="btn primary" onClick={handleClick}>Generate Avatar</button>
       </Container>
     </Fragment>
   )

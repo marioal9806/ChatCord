@@ -1,8 +1,3 @@
-:root {
-  --primary-color: #b721ff;
-  --secondary-color: #21d4fd; 
-}
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -10,10 +5,10 @@
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   line-height: 1.2;
-  background-color: #21D4FD;
-  background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+  background-color: #b721ff;
+  background-image: linear-gradient(19deg, #b721ff 0%, #21d4fd 100%);
   background-repeat: no-repeat;
   background-attachment: fixed;
   min-height: 100vh;
@@ -22,7 +17,7 @@ body {
 
 h1 {
   font-size: 4rem;
-  font-family: 'Staatliches', cursive;
+  font-family: "Staatliches", cursive;
 }
 
 h2 {
@@ -42,12 +37,9 @@ p {
 }
 
 #content-wrap {
-  padding-bottom: 5rem;    /* Footer height */
+  padding-bottom: 5rem;
+  /* Footer height */
 }
-
-/* ======================================== */
-/* Header Styling */
-/* ======================================== */
 
 h1 a {
   text-decoration: none;
@@ -91,7 +83,7 @@ nav ul li {
 }
 
 li a {
-  color: var(--secondary-color);
+  color: #21d4fd;
   text-decoration: none;
   padding: 0.8em 1em;
   border-radius: 5px;
@@ -102,10 +94,6 @@ li a:hover {
   background-color: rgba(255, 255, 255, 0.3);
 }
 
-/* ======================================== */
-/* Footer Styling */
-/* ======================================== */
-
 footer {
   color: #fff;
   background-color: #333;
@@ -113,7 +101,6 @@ footer {
   display: flex;
   align-items: center;
   justify-content: space-around;
-
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -125,14 +112,14 @@ footer p {
 }
 
 footer a {
-  color: var(--secondary-color);
+  color: #21d4fd;
   text-decoration: none;
   border-radius: 5px;
   transition: color 300ms;
 }
 
 footer a:hover {
-  color: var(--primary-color);
+  color: #b721ff;
 }
 
 footer a i {
@@ -148,9 +135,6 @@ footer a i:hover {
   transform: scale(1.2) rotateZ(-360deg);
 }
 
-/* ======================================== */
-/* Main Section Styling */
-/* ======================================== */
 main {
   margin: 2rem auto;
   padding: 1rem;
@@ -159,6 +143,60 @@ main {
   text-align: center;
   width: 90%;
   max-width: 980px;
+}
+
+.landing-page {
+  padding-right: 300px;
+  position: relative;
+  display: grid;
+  grid-template-areas: "title title title" "p1 p2 ." "p3 p3 ." "p4 p4 .";
+}
+
+.landing-page img {
+  position: absolute;
+  right: 0;
+  max-height: 100%;
+  animation-name: icon;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes icon {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.landing-page h2 {
+  grid-area: title;
+}
+
+.landing-page p {
+  color: white;
+  background-color: rgba(51, 51, 51, 0.7);
+  border-radius: 5px;
+}
+
+.landing-page p:nth-of-type(1) {
+  grid-area: p1;
+}
+
+.landing-page p:nth-of-type(2) {
+  grid-area: p2;
+}
+
+.landing-page p:nth-of-type(3) {
+  grid-area: p3;
+}
+
+.landing-page p:nth-of-type(4) {
+  grid-area: p4;
+  background-color: transparent;
 }
 
 .btn {
@@ -177,87 +215,12 @@ main {
 
 .primary {
   color: #fff;
-  background-color: var(--secondary-color);
+  background-color: #b721ff;
 }
 
 .secondary {
   color: #fff;
-  background-color: var(--primary-color);
-}
-
-/* ======================================== */
-/* Landing Page Styling */
-/* ======================================== */
-
-.landing-page {
-  padding-right: 300px;
-  position: relative;
-  display: grid;
-  grid-template-areas: 
-  "title title title"
-  "p1 p2 ."
-  "p3 p3 ."
-  "p4 p4 .";
-}
-
-.landing-page img {
-  position: absolute;
-  right: 0;
-  max-height: 100%;
-  animation-name: icon;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-}
-
-@keyframes icon {
-  0% {
-    transform: scale(1.0);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1.0);
-  }
-}
-
-.landing-page h2 {
-  grid-area: title;
-}
-
-.landing-page p {
-  color: white;
-  background-color: rgba(51,51,51, 0.7);
-  border-radius: 5px;
-}
-
-.landing-page p:nth-of-type(1) {
-  grid-area: p1;
-  /* transform: translate(-20px, -10px) rotateZ(-5deg); */
-}
-.landing-page p:nth-of-type(2) {
-  grid-area: p2;
-  /* transform: translate(-5px, 10px) rotateZ(3deg); */
-}
-.landing-page p:nth-of-type(3) {
-  grid-area: p3;
-}
-.landing-page p:nth-of-type(4) {
-  grid-area: p4;
-  background-color: transparent;
-}
-
-/* ======================================== */
-/* Lobby Styling */
-/* ======================================== */
-
-select, input {
-  font-family: inherit;
-  font-size: 100%;
-  margin: 1rem;
-  padding: 1rem;
-  display: inline-block;
-  border-radius: 5px;
+  background-color: #21d4fd;
 }
 
 .spinner-div {
@@ -266,6 +229,7 @@ select, input {
 
 .spinner {
   animation: spinner 2s linear;
+  animation-iteration-count: infinite;
 }
 
 @keyframes spinner {
@@ -276,20 +240,21 @@ select, input {
     transform: rotateZ(360deg);
   }
 }
-
-/* ======================================== */
-/* Chat Room Styling */
-/* ======================================== */
+select, input {
+  font-family: inherit;
+  font-size: 100%;
+  margin: 1rem;
+  padding: 1rem;
+  display: inline-block;
+  border-radius: 5px;
+}
 
 .room {
   padding: 0;
   overflow: hidden;
   max-height: 75vh;
   display: grid;
-  grid-template-areas:
-  "title title title"
-  "user-list msg-box msg-box"
-  "user-list msg-form msg-form";
+  grid-template-areas: "title title title" "user-list msg-box msg-box" "user-list msg-form msg-form";
   grid-template-rows: 1fr 3fr 60px;
 }
 
@@ -316,13 +281,11 @@ select, input {
 .user-list ul {
   /* list-style: "\1F449"; */
   list-style: none;
-
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-
   margin: 0;
   padding: 0.5rem;
 }
@@ -367,15 +330,14 @@ select, input {
   padding: 1rem;
   border-radius: 10px;
   color: #fff;
-  background-color: var(--secondary-color);
-
+  background-color: #21d4fd;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .message-container.self {
-  background-color: var(--primary-color);
+  background-color: #b721ff;
 }
 
 .message-container i {
@@ -418,3 +380,4 @@ select, input {
   margin: 0.5rem;
 }
 
+/*# sourceMappingURL=styles.css.map */

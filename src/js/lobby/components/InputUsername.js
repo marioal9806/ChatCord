@@ -21,7 +21,7 @@ function InputUsername(props) {
       />
       <button
         type="button"
-        className="btn secondary"
+        className="btn primary"
         onClick={props.handleRandomUsername}
       >
         Generate Random

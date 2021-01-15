@@ -9,7 +9,7 @@
   <link rel="manifest" href="/site.webmanifest">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Staatliches&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="scss/styles.scss">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
   <title>Lobby</title>
 </head>
@@ -20,7 +20,13 @@
         <a href="/"><i class="fas fa-comments"></i>ChatCord</a>
       </h1>
       <nav>
-        <ul>
+        <div class="hamburger">
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+        </div>
+        <ul class="nav-links">
+          <li class="close"><i class="fas fa-angle-double-right fa-2x" id="close-icon"></i></li>
           <li><a href="/">Home <i class="fas fa-home"></i></a></li>
           <li><a href="/lobby">Rooms <i class="far fa-window-restore"></i></a></li>
           <li><a href="#">My Account <i class="fas fa-user-cog"></i></a></li>
@@ -44,5 +50,17 @@
   </div>
 
   <script src="/js/lobby/index.js"></script>
+  <script>
+    const navLinks = document.querySelector('.nav-links')
+    const burger = document.querySelector('.hamburger')
+    burger.addEventListener('click', () => {
+      navLinks.classList.add('open')
+    })
+
+    const closeIcon = document.querySelector('#close-icon')
+    closeIcon.addEventListener('click', () => {
+      navLinks.classList.remove('open')
+    })
+  </script>
 </body>
 </html>
