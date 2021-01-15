@@ -1,0 +1,17 @@
+.spinner-div {
+  font-size: 4rem;
+}
+
+.spinner {
+  animation: spinner 2s linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes spinner {
+  from {
+    transform: rotateZ(0deg);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}

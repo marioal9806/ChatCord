@@ -1,0 +1,52 @@
+@use 'config' as c;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.2;
+  background-color: c.$primary-color;
+  background-image: linear-gradient(19deg, c.$primary-color 0%, c.$secondary-color 100%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+  position: relative;
+}
+
+h1 {
+  font-size: 4rem;
+  font-family: 'Staatliches', cursive;
+}
+
+h2 {
+  font-size: 3rem;
+  margin: 1rem 0;
+}
+
+p {
+  font-size: 1.2rem;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
+}
+
+ul {
+  list-style: none;
+}
+
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+#content-wrap {
+  padding-bottom: 5rem;    /* Footer height */
+}
