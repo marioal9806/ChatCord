@@ -141,14 +141,9 @@ function Lobby() {
         isError={state.isError}
         selectedRoom={state.selectedRoom}
         rooms={state.rooms}
+        handleSubmit={handleSubmit}
         dispatch={dispatch}
       />
-      { (state.isLoading || state.isError) ?
-        false : 
-        <button type="button" className="btn primary" onClick={handleSubmit}>
-          Join!
-        </button>
-      }
     </Fragment>
   );
 }

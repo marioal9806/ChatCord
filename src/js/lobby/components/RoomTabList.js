@@ -5,8 +5,8 @@ import { CSSTransition, SwitchTransition } from 'react-transition-group'
 import ButtonList from './ButtonList'
 
 const Container = styled.section`
-  margin: 1rem;
-  padding: 1rem;
+  margin: 0.5rem;
+  padding: 0.5rem;
 
   background-color: #fff;
   border: 1px solid lightgray;
@@ -20,6 +20,9 @@ const Container = styled.section`
   @media screen and (min-width: 768px) {
     display: flex;
     flex-direction: row;
+
+    margin: 1rem;
+    padding: 1rem;
   }
 
 `

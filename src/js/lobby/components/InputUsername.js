@@ -8,24 +8,26 @@ function InputUsername(props) {
   return (
     <Fragment>
       <p>Insert your username below. Or you can generate it randomly!</p>
-      <input
-        type="text"
-        name="username"
-        id="username"
-        value={props.username}
-        onChange={(e) =>
-          props.dispatch({ type: "SET_USERNAME", payload: e.target.value })
-        }
-        placeholder="Username..."
-        required
-      />
-      <button
-        type="button"
-        className="btn primary"
-        onClick={props.handleRandomUsername}
-      >
-        Generate Random
-      </button>
+      <div className="form-group">
+        <input
+          type="text"
+          name="username"
+          id="username"
+          value={props.username}
+          onChange={(e) =>
+            props.dispatch({ type: "SET_USERNAME", payload: e.target.value })
+          }
+          placeholder="Username..."
+          required
+        />
+        <button
+          type="button"
+          className="btn primary"
+          onClick={props.handleRandomUsername}
+        >
+          Generate Random
+        </button>
+      </div>
     </Fragment>
   );
 }
