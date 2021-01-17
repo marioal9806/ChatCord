@@ -14,6 +14,8 @@ footer {
   height: 5rem;
 
   p {
+    margin: 0;
+    padding: 0;
     line-height: 2;
   }
 
@@ -28,15 +30,23 @@ footer {
   }
 
   i {
-    margin: 0 1rem;
+    margin: 0 0.5rem;
     color: #fff;
-    font-size: 2.5rem;
+    font-size: 2rem;
     transition: transform 200ms;
     position: relative;
     top: 5px;
 
     &:hover {
       transform: scale(1.2) rotateZ(-360deg);
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  footer {
+    i {
+      font-size: 2.5rem;
     }
   }
 }
