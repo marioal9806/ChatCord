@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 const ListItem = styled.li`
   width: 100%;
-  margin: 10px;
 `
 
 const StyledButton = styled.button`
