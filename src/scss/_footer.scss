@@ -12,32 +12,31 @@ footer {
   bottom: 0;
   width: 100%;
   height: 5rem;
-}
 
-footer p {
-  line-height: 2;
-}
+  p {
+    line-height: 2;
+  }
 
-footer a {
-  color: c.$secondary-color;
-  text-decoration: none;
-  border-radius: 5px;
-  transition: color 300ms;
-}
+  a {
+    color: c.$secondary-color;
+    border-radius: 5px;
+    transition: color 300ms;
+    
+    &:hover {
+      color: c.$primary-color;
+    }
+  }
 
-footer a:hover {
-  color: c.$primary-color;
-}
+  i {
+    margin: 0 1rem;
+    color: #fff;
+    font-size: 2.5rem;
+    transition: transform 200ms;
+    position: relative;
+    top: 5px;
 
-footer a i {
-  margin: 0 1rem;
-  color: #fff;
-  font-size: 2.5rem;
-  transition: transform 200ms;
-  position: relative;
-  top: 5px;
-}
-
-footer a i:hover {
-  transform: scale(1.2) rotateZ(-360deg);
+    &:hover {
+      transform: scale(1.2) rotateZ(-360deg);
+    }
+  }
 }

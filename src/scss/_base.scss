@@ -18,17 +18,17 @@ body {
 }
 
 h1 {
-  font-size: 4rem;
+  font-size: 3rem;
   font-family: 'Staatliches', cursive;
 }
 
 h2 {
-  font-size: 3rem;
+  font-size: 2rem;
   margin: 1rem 0;
 }
 
 p {
-  font-size: 1.2rem;
+  font-size: 1rem;
   margin: 1rem;
   padding: 1rem;
 }
@@ -40,6 +40,24 @@ a {
 
 ul {
   list-style: none;
+}
+
+@media screen and (min-width: 768px) {
+  h1 {
+    font-size: 4rem;
+    font-family: 'Staatliches', cursive;
+  }
+  
+  h2 {
+    font-size: 3rem;
+    margin: 1rem 0;
+  }
+  
+  p {
+    font-size: 1.2rem;
+    margin: 1rem;
+    padding: 1rem;
+  }
 }
 
 #page-container {

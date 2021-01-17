@@ -24,20 +24,20 @@
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-  }
 
-  p:nth-of-type(1) {
-    grid-area: p1;
-  }
-  p:nth-of-type(2) {
-    grid-area: p2;
-  }
-  p:nth-of-type(3) {
-    grid-area: p3;
-  }
-  p:nth-of-type(4) {
-    grid-area: p4;
-    background-color: transparent;
+    &:nth-of-type(1) {
+      grid-area: p1;
+    }
+    &:nth-of-type(2) {
+      grid-area: p2;
+    }
+    &:nth-of-type(3) {
+      grid-area: p3;
+    }
+    &:nth-of-type(4) {
+      grid-area: p4;
+      background-color: transparent;
+    }
   }
 }
 
