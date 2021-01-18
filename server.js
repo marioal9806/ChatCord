@@ -73,7 +73,7 @@ app.get('/room/:roomName', (req, res) => {
 })
 
 app.get('/api/rooms', async (req, res) => {
-  Room.find({})
+  Room.find({}, 'id name description')
     .then(rooms => {
       res.json({ rooms })
     })
@@ -108,12 +108,9 @@ app.post('/join-room', (req, res) => {
   const { username, room: selectedRoom, avatar } = req.body
   req.session.username = username
   req.session.avatar = avatar
-  Room.find({})
-    .then(rooms => {
-      const roomExists = rooms.filter(room => {
-        return room.id === selectedRoom.id
-      })
-      if(roomExists.length === 0) {
+  Room.findOne({ id: selectedRoom.id }, 'id name')
+    .then(room => {
+      if(room === null) {
         res.status(404).json({ error: 'Room Not Found' })
       }
       else {
@@ -135,6 +132,19 @@ io.on('connection', socket => {
     socket.join(id)
     console.log(`JOIN ROOM: Socket "${socket.id}" has joined room "${id}"`)
     io.in(id).emit('message', { message: `${username} has joined the chat!`, username: 'ChatCord', self: false, avatar: CHATBOT_AVATAR.base64})
+
+    Room.findOne({ id: id })
+      .then(roomDocument => {
+        roomDocument.users.push({
+          id: socket.id,
+          username: username
+        })
+        socket._id = roomDocument.users[roomDocument.users.length - 1]._id
+        roomDocument.save((err) => {
+          if(err) throw err
+          io.in(id).emit('userlist change', {userlist: roomDocument.users})
+        })
+      })
   })
 
   socket.on('message', (msg, room) => {
@@ -146,6 +156,15 @@ io.on('connection', socket => {
     if(socket.room !== undefined) {
       console.log(`DISCONNECT: Socket "${socket.id}" has disconnected`)
       io.in(socket.room.id).emit('message', { message: `${socket.username} has left the chat!`, username: 'ChatCord', self: false, avatar: CHATBOT_AVATAR.base64})
+      
+      Room.findOne({ id: socket.room.id })
+        .then(roomDocument => {
+          roomDocument.users.pull(socket._id)
+          roomDocument.save((err) => {
+            if(err) throw err
+            io.in(socket.room.id).emit('userlist change', {userlist: roomDocument.users})
+          })
+        })
     } else { 
       console.log(`DISCONNECT: An anonymous Socket has disconnected`)
     } 

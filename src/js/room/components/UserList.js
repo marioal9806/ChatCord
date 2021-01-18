@@ -7,7 +7,7 @@ function UserList(props) {
       <ul>
         { props.onlineUsers.length === 0 && <li>Whoops! No users online</li> }
         { props.onlineUsers.length !== 0 && props.onlineUsers.map((user, index) => {
-          return <li key={index}>{user}</li>
+          return <li key={index}>{user.username}</li>
         })}
       </ul>
     </aside>

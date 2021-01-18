@@ -73,6 +73,12 @@ function Chat() {
     });
   }, []);
 
+  useEffect(() => {
+    socket.on("userlist change", ({userlist}) => {
+      setOnlineUsers(userlist)
+    })
+  }, [])
+
   function handleNewMessage() {
     socket.emit("message", { message: newMessage, username: username, avatar: avatar}, currentRoom);
     setMessages(prevMessages => [...prevMessages, { message: newMessage, username: username, self: true, avatar: avatar }]);
