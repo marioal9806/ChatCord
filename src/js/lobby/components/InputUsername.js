@@ -13,6 +13,7 @@ function InputUsername(props) {
           type="text"
           name="username"
           id="username"
+          className="form-control"
           value={props.username}
           onChange={(e) =>
             props.dispatch({ type: "SET_USERNAME", payload: e.target.value })

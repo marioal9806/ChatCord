@@ -12,6 +12,7 @@ function SelectRoomForm(props) {
         <select
           name="room"
           value={props.selectedRoom.id}
+          className="form-control"
           onChange={(e) =>
             props.dispatch({
               type: "SET_SELECTED_ROOM",
