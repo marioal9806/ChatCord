@@ -20,7 +20,13 @@
         <a href="/"><i class="fas fa-comments"></i>ChatCord</a>
       </h1>
       <nav>
-        <ul>
+        <div class="hamburger">
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+        </div>
+        <ul class="nav-links">
+          <li class="close"><i class="fas fa-angle-double-right fa-2x" id="close-icon"></i></li>
           <li><a href="/">Home <i class="fas fa-home"></i></a></li>
           <li><a href="/lobby">Rooms <i class="far fa-window-restore"></i></a></li>
           <li><a href="#">My Account <i class="fas fa-user-cog"></i></a></li>
@@ -41,5 +47,17 @@
   </div>
 
   <script src="/js/room/index.js"></script>
+  <script>
+    const navLinks = document.querySelector('.nav-links')
+    const burger = document.querySelector('.hamburger')
+    burger.addEventListener('click', () => {
+      navLinks.classList.add('open')
+    })
+
+    const closeIcon = document.querySelector('#close-icon')
+    closeIcon.addEventListener('click', () => {
+      navLinks.classList.remove('open')
+    })
+  </script>
 </body>
 </html>

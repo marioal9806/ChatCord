@@ -8,7 +8,11 @@ function Message(props) {
           <img src={props.message.avatar} /> :
           <i className="fas fa-user-circle fa-2x"></i> 
         }
-        <span>{`${props.message.username}: `}{props.message.message}</span>
+        <div className="message-text">
+          <span className="username">{`${props.message.username}`}</span>
+          <br/>
+          <span>{props.message.message}</span>
+        </div>
       </div>
     </li>
   )

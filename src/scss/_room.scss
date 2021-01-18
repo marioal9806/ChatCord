@@ -1,138 +1,175 @@
 @use 'config' as c;
 
+// Main Container
+
 .room {
   padding: 0;
   overflow: hidden;
-  max-height: 75vh;
   display: grid;
   grid-template-areas:
-  "title title title"
-  "user-list msg-box msg-box"
-  "user-list msg-form msg-form";
-  grid-template-rows: 1fr 3fr 60px;
+  "title"
+  "user-list"
+  "msg-box"
+  "msg-form";
+  grid-template-rows: auto 1fr 2fr 60px;
+  grid-template-columns: 1fr;
+
+  h2 {
+    margin: 0;
+    padding: 1rem 0;
+    color: #fff;
+    background-color: #333;
+    grid-area: title;
+  }
 }
 
-.room h2 {
-  margin: 0;
-  padding: 1rem 0;
-  color: #fff;
-  background-color: #333;
-  grid-area: title;
+@media screen and (min-width: 768px) {
+  .room {
+    padding: 0;
+    overflow: hidden;
+    display: grid;
+    grid-template-areas:
+    "title title"
+    "user-list msg-box"
+    "user-list msg-form";
+    grid-template-rows: 1fr 3fr 60px;
+    grid-template-columns: 1fr 2fr;
+  }
 }
+
+// User list section
 
 .user-list {
   grid-area: user-list;
-  border-right: 5px solid #333;
+  border: none;
+  border-bottom: 5px solid #333;
   margin: 0;
   padding: 0;
+
+  h3 {
+    padding: 0.5rem;
+    margin: 0.5rem;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+
+    margin: 0;
+    padding: 0.5rem;
+  }
 }
 
-.user-list p {
-  padding: 0.5rem;
-  margin: 0.5rem;
+@media screen and (min-width: 768px) {
+  .user-list {
+    border: none;
+    border-right: 5px solid #333;
+  }
 }
 
-.user-list ul {
-  /* list-style: "\1F449"; */
-  list-style: none;
-
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-
-  margin: 0;
-  padding: 0.5rem;
-}
-
-.user-list ul li {
+.user {
   margin: 0;
   padding: 0.5em;
   width: 100%;
   flex: 1;
   background-color: aliceblue;
+
+  &:nth-child(odd) {
+    background-color: #fff;
+  }
 }
 
-.user-list ul li:nth-child(odd) {
-  background-color: #fff;
-}
+// Message box: Container for all messages
 
 .message-box {
   grid-area: msg-box;
+  max-height: 40vh;
   background-color: #fff;
   overflow: auto;
 }
 
-.message-box ul {
-  list-style: none;
-}
-
 .message {
-  padding: 0.5em;
+  padding: 0.5rem;
   display: flex;
-}
 
-.message.self {
-  justify-content: flex-end;
-}
+  &.self {
+    justify-content: flex-end;
+  }
 
-.message:nth-child(odd) {
-  background-color: aliceblue;
+  &:nth-child(odd) {
+    background-color: aliceblue;
+  }
 }
 
 .message-container {
-  flex-basis: content;
-  padding: 1rem;
+  padding: 0.5rem;
   border-radius: 10px;
   color: #fff;
   background-color: c.$secondary-color;
-
+  
   display: flex;
+  max-width: 100%;
   align-items: center;
   justify-content: space-between;
+
+  &.self {
+    background-color: c.$primary-color;
+  }
+
+  img {
+    flex: 0 1 auto;
+    width: 3rem;
+    height: 3rem;
+  }
+
+  i {
+    flex: 0 1 1rem;
+    margin-right: 0.5rem;
+  }
 }
 
-.message-container.self {
-  background-color: c.$primary-color;
-}
-
-.message-container i {
-  flex: 0 1 1rem;
-  margin-right: 0.5rem;
-}
-
-.message-container img {
+.message-text {
   flex: 0 1 auto;
-  width: 3rem;
-  height: 3rem;
-  margin-right: 0.5rem;
+  max-width: calc(100% - 4rem);
+  padding: 0.5rem;
+  text-align: left;
+
+  span {
+    overflow-wrap: break-word;
+  }
+
+  .username {
+    color: #333;
+    font-weight: bold;
+  }
 }
 
-.message-container span {
-  flex: 1;
-}
+// Input form control
 
 .message-form {
   grid-area: msg-form;
-  border-top: 5px solid #333;
   padding: 1rem 0;
   margin: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: #333;
-}
 
-.message-form input {
-  flex: 1;
-  font-family: inherit;
-  font-size: 100%;
-  padding: 0.5rem 1rem;
-}
+  input {
+    flex: 1;
+    font-family: inherit;
+    font-size: 100%;
+    padding: 0.5rem 1rem;
+    margin-left: 0.5rem;
+    border-radius: 5px;
+  }
 
-.message-form button {
-  flex: 0 1 1rem;
-  padding: 0.5rem;
-  margin: 0.5rem;
+  button {
+    flex: 0 1 1rem;
+    padding: 0.5rem;
+    margin: 0.5rem;
+  }
 }
