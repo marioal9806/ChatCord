@@ -44,7 +44,7 @@ function UserList(props) {
     listNode.current.style.maxHeight = isHidden
       ? '0px'
       : listNode.current.scrollHeight + 'px'
-  }, [isHidden])
+  }, [isHidden, props.onlineUsers])
 
   return (
     <aside className='user-list'>
