@@ -1,8 +1,11 @@
-import React, { Fragment, useState, useEffect, useMemo } from "react";
+import React, { Fragment, useState, useEffect, useMemo, useRef } from "react";
 
 import UserList from "./components/UserList";
 import MessageBox from "./components/MessageBox";
 import MessageForm from "./components/MessageForm";
+
+import NotificationSound from "../../notification-sound.mp3";
+import MessageSentSound from "../../message-sent-sound.mp3";
 
 import axios from "axios";
 import io from "socket.io-client";
@@ -19,6 +22,9 @@ function Chat() {
   const socket = useMemo(() => {
     return io()
   }, [])
+
+  const notificationPlayer = useRef(null)
+  const messagePlayer = useRef(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -70,6 +76,7 @@ function Chat() {
   useEffect(() => {
     socket.on("message", (message) => {
       setMessages((prevMessages) => [...prevMessages, message]);
+      notificationPlayer.current.play()
     });
   }, []);
 
@@ -83,6 +90,7 @@ function Chat() {
     socket.emit("message", { message: newMessage, username: username, avatar: avatar}, currentRoom);
     setMessages(prevMessages => [...prevMessages, { message: newMessage, username: username, self: true, avatar: avatar }]);
     setNewMessage("");
+    messagePlayer.current.play()
   }
 
   return (
@@ -97,6 +105,15 @@ function Chat() {
         message={newMessage}
         handleNewMessage={handleNewMessage}
         setNewMessage={setNewMessage}
+      />
+
+      <audio 
+        src={NotificationSound}
+        ref={notificationPlayer}
+      />
+      <audio 
+        src={MessageSentSound}
+        ref={messagePlayer}
       />
     </Fragment>
   );
