@@ -6,8 +6,6 @@ const ListItem = styled.li`
 `
 
 const StyledButton = styled.button`
-  font-family: inherit;
-  font-size: 1rem;
   color: white;
   background-color: #0d6efd;
   width: 100%;
