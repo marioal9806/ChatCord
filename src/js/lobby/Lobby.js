@@ -5,7 +5,7 @@ import SelectRoomForm from "./components/SelectRoomForm";
 import InputUsername from "./components/InputUsername";
 import RoomTabList from "./components/RoomTabList";
 import Spinner from "./components/Spinner";
-import Avatar from "./components/Avatar";
+import Avatar from "../globalComponents/Avatar";
 
 function lobbyReducer(state, action) {
   switch (action.type) {
@@ -86,15 +86,35 @@ function Lobby() {
     };
   }, []);
 
+  useEffect(() => {
+    axios.get('/user/data')
+      .then(response => {
+        const { isLoggedIn } = response.data
+
+        if(isLoggedIn) {
+          const { username, avatar } = response.data.user
+          dispatch({ type: 'SET_USERNAME', payload: username })
+          dispatch({ type: 'SET_AVATAR', payload: avatar })
+        }
+      })
+  }, [])
+
   function handleSubmit() {
-    const serializedSVG = new XMLSerializer().serializeToString(state.avatar)
-    const base64Data = window.btoa(serializedSVG)
-    const serializedAvatar = "data:image/svg+xml;base64," + base64Data
+    let submitAvatar
+    if(typeof state.avatar !== 'string') {
+      const serializedSVG = new XMLSerializer().serializeToString(state.avatar)
+      const base64Data = window.btoa(serializedSVG)
+      const serializedAvatar = "data:image/svg+xml;base64," + base64Data
+      submitAvatar = serializedAvatar
+    } else {
+      submitAvatar = state.avatar
+    }
+
     axios
       .post("/join-room", {
         room: state.selectedRoom,
         username: state.username,
-        avatar: serializedAvatar
+        avatar: submitAvatar
       })
       // If the request is successful, it means the room exists
       .then((response) => {
@@ -128,8 +148,11 @@ function Lobby() {
       <Avatar 
         isLoading={state.isLoading}
         isError={state.isError}
+        avatar={state.avatar}
         dispatch={dispatch}
-      />
+      >
+        You can also generate your own avatar!
+      </Avatar>
       <RoomTabList 
         isLoading={state.isLoading}
         isError={state.isError}

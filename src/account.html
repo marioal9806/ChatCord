@@ -36,21 +36,7 @@
   
       
       <div id="content-wrap">
-        <main class="landing-page">
-          <h2>Welcome To ChatCord!</h2>
-    
-          <p>ChatCord is a free app that lets you share your ideas on different topics.</p>
-          <p>You can join different Chat Rooms and interact with the connected users.</p>
-          <p>
-            It's easy to start! <br> By just using a nickname you can start chatting. <br> If you prefer, you can also create an account to store your messages and preferences.
-          </p>
-          
-          <p>
-            <button class="btn primary" id="goto-lobby">Join a Room!</button>
-            <button class="btn secondary" id="goto-register">Create your account</button>
-          </p>
-          <img src="images/post-message.svg" alt="Phone Chat Illustration">
-        </main>
+        <main id="user-settings"></main>
       </div>
 
       <footer>
@@ -61,17 +47,8 @@
       </footer>
     </div>
 
+    <script src="/js/account/index.js"></script>
     <script>
-      const lobbyBtn = document.getElementById('goto-lobby')
-      lobbyBtn.addEventListener('click', () => {
-        window.location.href = "/lobby"
-      })
-
-      const registerBtn = document.getElementById('goto-register')
-      registerBtn.addEventListener('click', () => {
-        window.location.href = "/register"
-      })
-
       const navLinks = document.querySelector('.nav-links')
       const burger = document.querySelector('.hamburger')
       burger.addEventListener('click', () => {
@@ -83,6 +60,5 @@
         navLinks.classList.remove('open')
       })
     </script>
-
   </body>
 </html>

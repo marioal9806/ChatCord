@@ -35,17 +35,21 @@ function Avatar(props) {
   useEffect(() => {
     const avatars = new Avatars(sprites, options)
     const svg = avatars.create()
-    setAvatar(svg)
+    setAvatar(props.avatar ? `<img src=${props.avatar} />` : svg)
   }, [])
 
   // Store a reference to the newly created svg element
   const svgNode = useCallback(node => {
     if (node !== null) {
-      props.dispatch({ type: 'SET_AVATAR', payload: node.firstChild })
+      if(node.firstChild.src) {
+        props.dispatch({ type: 'SET_AVATAR', payload: node.firstChild.src })
+      } else {
+        props.dispatch({ type: 'SET_AVATAR', payload: node.firstChild })
+      }
     }
   }, [avatar]);
 
-  function handleClick(e) {
+  function handleClick() {
     const avatars = new Avatars(sprites, options)
     const svg = avatars.create()
     setAvatar(svg)
@@ -53,7 +57,7 @@ function Avatar(props) {
 
   return (
     <Fragment>
-      <p>You can also generate your own avatar!</p>
+      <p>{ props.children }</p>
       <Container>
         { avatar && <AvatarContainer ref={svgNode} dangerouslySetInnerHTML={{__html: avatar}}></AvatarContainer> }
         <button type="button" className="btn primary" onClick={handleClick}>Generate Avatar</button>
