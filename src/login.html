@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Staatliches&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="scss/styles.scss">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+    <title>Log in Page</title>
+  </head>
+  <body>
+    <div id="page-container">
+      <header>
+        <h1>
+          <a href="/"><i class="fas fa-comments"></i>ChatCord</a>
+        </h1>
+        <nav>
+          <div class="hamburger">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+          </div>
+          <ul class="nav-links">
+            <li class="close"><i class="fas fa-angle-double-right fa-2x" id="close-icon"></i></li>
+            <li><a href="/">Home <i class="fas fa-home"></i></a></li>
+            <li><a href="/lobby">Rooms <i class="far fa-window-restore"></i></a></li>
+            <li><a href="/account">My Account <i class="fas fa-user-cog"></i></a></li>
+          </ul>
+        </nav>
+      </header>
+  
+      
+      <div id="content-wrap">
+        <main id="login"></main>
+      </div>
+
+      <footer>
+        <p>
+          Project created by <a href="mailto:marioal9806@hotmail.com">Mario Ortega</a>
+          <a href="https://github.com/marioal9806/ChatCord" target="_blank"><i class="fab fa-github-square"></i></a>
+        </p>     
+      </footer>
+    </div>
+
+    <script src="/js/login/index.js"></script>
+    <script>
+      const navLinks = document.querySelector('.nav-links')
+      const burger = document.querySelector('.hamburger')
+      burger.addEventListener('click', () => {
+        navLinks.classList.add('open')
+      })
+
+      const closeIcon = document.querySelector('#close-icon')
+      closeIcon.addEventListener('click', () => {
+        navLinks.classList.remove('open')
+      })
+    </script>
+
+  </body>
+</html>
