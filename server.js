@@ -1,8 +1,11 @@
+// Read Env Vars from dotenv file
 require('dotenv').config()
 
+// Node modules
 const path = require('path')
 const http = require('http')
 
+// Third-party modules
 const express = require('express')
 const app = express()
 const server = http.createServer(app)
@@ -12,20 +15,28 @@ const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
 const mongoose = require('mongoose')
 const helmet = require('helmet')
-
+const flash = require('connect-flash')
 const generate = require('project-name-generator')
 
+// Environment Variables
 const PORT = process.env.PORT || 3000
 const NODE_ENV = process.env.NODE_ENV || 'development'
 const PUBLIC_PATH = process.env.NODE_ENV === 'production' ? 'build' : 'dist'
 
+// Mongoose models
 const Room = require('./models/Room')
 const Bot = require('./models/Bot')
+const User = require('./models/User')
 
+// Routes
+const userRoute = require('./routes/user')
+
+// MongoDB connection
 mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true})
 .then(() => console.log('Connection to database successful'))
 .catch(err => console.log(err));
 
+// Retrieve Chatbot avatar
 let CHATBOT_AVATAR
 Bot.findOne({ name: 'welcome-bot' })
   .then(bot => {
@@ -40,7 +51,6 @@ app.use(express.static(path.join(__dirname, PUBLIC_PATH)))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(NODE_ENV === 'production' ? morgan('common') : morgan('dev'))
-
 app.use(session({
   secret: 'LN2ByYpc?G7l37&',
   name: 'sessionVv33QBzn',
@@ -58,6 +68,16 @@ app.use(session({
     collection: 'sessions'
   })
 }))
+app.use(flash())
+app.use('/user', userRoute)
+
+function ensureAuthenticated(req, res, next) {
+  if(req.session.user) {
+    next()
+  } else {
+    res.redirect('/login')
+  }
+}
 
 // API Endpoints
 app.get('/', (req, res) => {
@@ -66,6 +86,18 @@ app.get('/', (req, res) => {
 
 app.get('/lobby', (req, res) => {
   res.sendFile(path.join(__dirname, PUBLIC_PATH, 'lobby.html'))
+})
+
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, PUBLIC_PATH, 'login.html'))
+})
+
+app.get('/register', (req, res) => {
+  res.sendFile(path.join(__dirname, PUBLIC_PATH, 'register.html'))
+})
+
+app.get('/account', ensureAuthenticated, (req, res) => {
+  res.sendFile(path.join(__dirname, PUBLIC_PATH, 'account.html'))
 })
 
 app.get('/room/:roomName', (req, res) => {
@@ -86,8 +118,13 @@ app.get('/api/generate', (req, res) => {
   })
 })
 
+
+
 app.get('/api/username', (req, res) => {
-  if(req.session.username) {
+  if(req.session.user) {
+    res.json({ username: req.session.user.username })
+  }
+  else if(req.session.username) {
     res.json({ username: req.session.username })
   }
   else {
@@ -96,12 +133,19 @@ app.get('/api/username', (req, res) => {
 })
 
 app.get('/api/avatar', (req, res) => {
-  if(req.session.avatar) {
+  if(req.session.user) {
+    res.json({ avatar: req.session.user.avatar })
+  }
+  else if(req.session.avatar) {
     res.json({ avatar: req.session.avatar })
   }
   else {
     res.status(404).json({ error: 'Avatar Not Found' })
   }
+})
+
+app.get('/api/flash', (req, res) => {
+  res.json({ flashMessages: req.flash('success') })
 })
 
 app.post('/join-room', (req, res) => {
@@ -119,6 +163,8 @@ app.post('/join-room', (req, res) => {
     })
     .catch(error => console.error(error))
 })
+
+
 
 
 // Socket Server Events
