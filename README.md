@@ -1,6 +1,8 @@
 # ChatCord
 
-A Chat Application implemented using React, Express, SocketIO and MongoDB.
+A Chat Application implemented using React, Express, SocketIO and MongoDB. 
+
+**Visit the live app here:** https://chat-cord-marioortega.herokuapp.com/ 
 
 ## Features
 
@@ -10,6 +12,8 @@ A Chat Application implemented using React, Express, SocketIO and MongoDB.
 - You can select one of the randomly generated Avataaars from [DiceBear](https://avatars.dicebear.com/)
 - Create an account and save your preferences
 - Fully responsive (Desktop & mobile view)
+
+
 
 ## Frontend
 
